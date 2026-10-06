@@ -1,0 +1,18 @@
+---
+title: 'Week 2 bij Nexu'
+week: 2
+---
+
+Week twee zit erop, en de demo is flink gegroeid.
+
+Vorige week werkte ik alleen met de instellingen van Odoo. Deze week schreef ik voor het eerst zelf code: eigen uitbreidingen voor dingen die Odoo niet standaard kan. Midden in de week heb ik mijn hele demo ook overgezet naar de betalende versie van Odoo (enterprise), zonder iets kwijt te raken van mijn oude data.
+
+Wat er deze week bijkwam:
+
+- Apotheken betalen niet meer online wanneer ze bestellen. Hun bestelling komt eerst binnen als offerte, zodat ze nagekeken kan worden.
+- Facturen kloppen nu met wat er echt binnenkwam. Komen er 29 stuks binnen in plaats van 30, dan staat er ook 29 op de factuur.
+- Aanbiedingen tonen hoe lang ze nog lopen, en gaan vanzelf open en dicht.
+- Een apotheek met een eigen magazijn kreeg een eigen account. Daarmee ziet ze alleen haar eigen magazijn.
+- Het personeel kreeg een eigen webshop, waar het aan aankoopprijs kan bestellen.
+
+Het meeste leerde ik opnieuw van het testen. Zo stond een inkoop van 3 stuks op 0 euro, terwijl er bij 500 stuks wel een bedrag stond. De oorzaak: bij de leverancier stond een minimum aantal ingesteld, en onder dat aantal vond Odoo geen prijs. Zulke dingen ondervond ik pas, toen ik alles zelf uitteste.

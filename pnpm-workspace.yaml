@@ -1,0 +1,4 @@
+# Deze pakketten willen bij installatie een script draaien. De site heeft dat niet nodig.
+allowBuilds:
+  '@vercel/speed-insights': false
+  sharp: false
