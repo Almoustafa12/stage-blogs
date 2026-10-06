@@ -76,7 +76,7 @@ export function Colofon() {
       </p>
       <dl className="colo-list">
         <div>
-          <dt>Tekst</dt>
+          <dt>Blogger</dt>
           <dd>{SITE.author}</dd>
         </div>
         <div>
@@ -95,7 +95,6 @@ export function Colofon() {
         </div>
       </dl>
       <p className="colo-small">
-        <a href="/rss">RSS-feed</a>
         <span>© {YEAR}</span>
       </p>
     </footer>
