@@ -34,7 +34,7 @@ export function Kiosk() {
         <p className="intro-t">{SITE.intro}</p>
       </section>
 
-      <section className="rack" id="nummers" aria-labelledby="rack-h">
+      <section className="rack" id="weken" aria-labelledby="rack-h">
         <div className="rack-head">
           <h2 id="rack-h" className="sec-h">
            Alle weken

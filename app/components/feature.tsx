@@ -124,7 +124,7 @@ export function Feature({ post, prev, next }: Props) {
                   <span>{prev.metadata.title}</span>
                 </a>
               )}
-              <a className="more-link" href="/#nummers" data-home="">
+              <a className="more-link" href="/#weken" data-home="">
                 <span>Alle blogs</span>
               </a>
             </div>
