@@ -1,0 +1,24 @@
+---
+title: 'Week 3 bij Nexu'
+week: 3
+---
+
+Week drie zit erop. Deze week draaide vooral rond magazijnen, het personeel en partijnummers.
+
+Een apotheek met een eigen magazijn kan nu ook als magazijn inloggen. Daar ziet ze alle leveringen die via de centrale inkoop binnenkomen.
+
+Daarnaast schreef ik een eigen uitbreiding met een extra veld op het magazijn. Producten die via dat magazijn binnenkomen, zijn daardoor alleen zichtbaar voor de apotheken die je kiest. In mijn project gaan de producten uit dat magazijn zo maar naar één andere apotheek.
+
+Voor het personeel kan je nu per product een limiet instellen. Je zet eerst een vinkje aan bij de website van het personeel. Daarna krijgt elk product een extra veld, waar je invult hoeveel stuks één personeelslid per jaar mag bestellen. Die limiet geldt alleen in de personeelswebshop.
+
+Haalt een personeelslid iets op in een apotheek waar het product niet ligt, dan zie je drie stappen bij de leveringen. Eerst stuurt het centrale magazijn het product weg. Dan komt de doos aan in de apotheek. En daarna haalt het personeelslid het op.
+
+Daarna voegde ik partijnummers toe. In de praktijk hangt zo'n nummer als sticker op de doos, en wordt het gescand. Zo kan je altijd nagaan waar een product vandaan komt. Het werkt bij inkoop en bij verkoop. Bij een nieuwe inkoop geef je de partij een nummer, en dat nummer vult zich nu zelfs vanzelf in. Bij verkoop gaat eerst de oudste partij weg, en pas daarna de nieuwe.
+
+Omdat elke partij met een andere korting kan binnenkomen, schreef ik ook een uitbreiding die de korting per partij doorrekent. Op een prijslijst staat nu een vinkje "korting per partij doorrekenen". Staat het aan, dan betaalt een apotheek de prijs van de partij die ze krijgt. Op de productpagina staat hoeveel stuks er nog zijn aan welke prijs, en de factuur rekent elke partij aan haar eigen prijs. Voor het personeel staat het vinkje uit, dus zij krijgen die korting niet.
+
+Loopt een aanbieding af terwijl iemand de pagina openheeft, dan verschijnt nu meteen de gewone prijs, zonder dat je de pagina moet vernieuwen.
+
+Het meeste leerde ik opnieuw van het testen. Ik liep de hele demo een keer door, van bestelling tot factuur, en botste op een paar fouten. Zo kreeg een personeelslid dat iets ophaalde twee facturen voor dezelfde bestelling. In de route stond een vinkje uit, waardoor Odoo de eerste rit, van het centrale magazijn naar de apotheek, al als levering aan het personeelslid telde. Nu blijft het bij één factuur. Bij een ander product sprong het aantal steeds terug op 0, ook al vulde ik het in. Ook dat heb ik opgelost. En bij een product verscheen de prijs per partij niet, hoewel er voorraad lag. Die voorraad bleek al gereserveerd voor oude testbestellingen. Voorraad die er ligt, is dus niet altijd vrij.
+
+Een drukke week, met veel nieuwe functies en een paar lastige fouten.
