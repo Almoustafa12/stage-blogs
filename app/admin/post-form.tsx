@@ -4,7 +4,7 @@ import { useActionState, useState } from 'react'
 import { savePost, type FormValues, type SaveState } from './actions'
 
 // Voorbeeld zoals het op de site komt: alinea's en opsommingen.
-function Preview({ title, text }: { title: string; text: string }) {
+function Preview({ title, tags, text }: { title: string; tags: string[]; text: string }) {
   let blocks: { kind: 'p' | 'ul'; lines: string[] }[] = []
   for (let raw of text.replace(/\r\n?/g, '\n').split('\n')) {
     let line = raw.trim()
@@ -25,6 +25,7 @@ function Preview({ title, text }: { title: string; text: string }) {
     <div className="adm-preview">
       <p className="adm-preview-label">Voorbeeld</p>
       <h3 className="adm-preview-title">{title}</h3>
+      {tags.length > 0 && <p className="adm-preview-tags">{tags.join(' · ')}</p>}
       {blocks
         .filter((b) => b.lines.length)
         .map((b, i) =>
@@ -42,9 +43,15 @@ function Preview({ title, text }: { title: string; text: string }) {
   )
 }
 
-type Props = { initial: FormValues; slug?: string; sha?: string }
+type Props = { initial: FormValues; slug?: string; sha?: string; knownTags?: string[] }
 
-export function PostForm({ initial, slug, sha }: Props) {
+const splitTags = (value: string) =>
+  value
+    .split(',')
+    .map((tag) => tag.trim())
+    .filter(Boolean)
+
+export function PostForm({ initial, slug, sha, knownTags = [] }: Props) {
   let [state, action, pending] = useActionState<SaveState, FormData>(savePost, {})
   let editing = Boolean(slug)
   let [week, setWeek] = useState(initial.week)
@@ -52,6 +59,9 @@ export function PostForm({ initial, slug, sha }: Props) {
   let [titleTouched, setTitleTouched] = useState(editing)
   let [date, setDate] = useState(initial.date)
   let [text, setText] = useState(initial.text)
+  let [tags, setTags] = useState(initial.tags)
+  let chosen = splitTags(tags).map((tag) => tag.toLowerCase())
+  let suggestions = knownTags.filter((tag) => !chosen.includes(tag.toLowerCase()))
 
   return (
     <form action={action} className="adm-form adm-editor">
@@ -97,6 +107,33 @@ export function PostForm({ initial, slug, sha }: Props) {
         />
       </label>
 
+      <label className="adm-field" htmlFor="tags">
+        <span>Tags (komma ertussen, mag leeg)</span>
+        <input
+          id="tags"
+          name="tags"
+          maxLength={200}
+          placeholder="bv. Code, Lessons learned"
+          value={tags}
+          onChange={(e) => setTags(e.target.value)}
+        />
+      </label>
+      {suggestions.length > 0 && (
+        <p className="adm-help adm-tags">
+          Al gebruikt:
+          {suggestions.map((tag) => (
+            <button
+              type="button"
+              key={tag}
+              className="adm-tag"
+              onClick={() => setTags([...splitTags(tags), tag].join(', '))}
+            >
+              + {tag}
+            </button>
+          ))}
+        </p>
+      )}
+
       <label className="adm-field" htmlFor="text">
         <span>Tekst</span>
         <textarea id="text" name="text" rows={16} maxLength={20000} required value={text} onChange={(e) => setText(e.target.value)} />
@@ -118,7 +155,7 @@ export function PostForm({ initial, slug, sha }: Props) {
         </a>
       </div>
 
-      <Preview title={title} text={text} />
+      <Preview title={title} tags={splitTags(tags)} text={text} />
     </form>
   )
 }

@@ -17,6 +17,7 @@ export type StoredPost = {
   week: number
   title: string
   date: string
+  tags: string
   text: string
   sha: string
 }
@@ -35,7 +36,7 @@ export class StoreError extends Error {}
 function toPost(slug: string, raw: string, sha: string): StoredPost {
   let data = fromMdx(raw)
   let week = data.week || parseInt(slug.replace(/\D/g, ''), 10)
-  return { slug, sha, week, title: data.title || `Week ${week} bij Nexu`, date: data.date, text: data.text }
+  return { slug, sha, week, title: data.title || `Week ${week} bij Nexu`, date: data.date, tags: data.tags, text: data.text }
 }
 
 function sortPosts(posts: StoredPost[]) {

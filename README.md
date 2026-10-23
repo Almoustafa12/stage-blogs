@@ -16,6 +16,7 @@ Mijn stageblog: elke week een nieuwe blog, met een eigen cover (Week 1, Week 2, 
 ---
 title: 'Week 3 bij Nexu'
 week: 3
+tags: 'Code, Testen, Lessons learned'
 ---
 
 Eerste alinea.
@@ -28,6 +29,7 @@ Tweede alinea.
 
 Laat een lege regel tussen twee alinea's. De eerste alinea komt onder de titel, de rest eronder.
 De cover ("Week 3") en de kleur maakt de site zelf.
+`tags` is optioneel: onderwerpen met een komma ertussen (max. 6). Elke tag krijgt een eigen pagina, bv. `/tags/lessons-learned`.
 Een datum is niet nodig. Wil je er toch een, voeg dan `publishedAt: '2026-10-09'` toe in de bovenkant.
 
 4. Sla op (commit). Vercel zet de nieuwe versie binnen een minuut online.
@@ -88,14 +90,19 @@ Klik daarna bij Deployments op Redeploy. Open dan `https://jouw-site.vercel.app/
 
 Elke nieuwe regel wordt een alinea. Een regel die begint met `- ` wordt een punt in een opsomming.
 
+Tags vul je in bij "Tags (komma ertussen)". Onder het veld staan de tags die je al gebruikte: klik erop om ze toe te voegen.
+
 ## De naam veranderen
 
 De naam van de site, je naam en de inleiding staan in `app/site.ts`.
+De tekst van de pagina Over mij staat daar ook, in `ABOUT`.
 
 ## Adressen
 
 - `/` de startpagina met alle weken
 - `/blog/week-2` week 2 (handig om te delen; de link toont de cover)
+- `/tags/code` alle blogs met de tag Code
+- `/over` over mij en mijn stage
 - `/rss` de RSS-feed
 
 ## Lokaal bekijken
@@ -113,10 +120,13 @@ Open daarna http://localhost:3000.
 - `app/components/kiosk.tsx`: de startpagina (naam, covers, inhoud)
 - `app/components/feature.tsx`: een blog (cover die opengaat, tekst, volgende week)
 - `app/components/magazine.tsx`: de cover en het colofon
+- `app/components/lists.tsx`: de balk bovenaan, de tags en de inhoudstafel
+- `app/tags/[tag]/page.tsx`: de pagina per tag
+- `app/over/page.tsx`: de pagina Over mij
 - `app/components/mdx.tsx`: hoe de tekst van een blog wordt opgemaakt
 - `public/mag.js`: alle beweging (naam die uitrekt, rek met covers, cover die opengaat)
 - `app/global.css`: alle opmaak
-- `app/blog/utils.ts`: de kleuren per week en het inlezen van de blogs
+- `app/blog/utils.ts`: de kleuren per week, het inlezen van de blogs en de tags
 - `app/og/route.tsx`: het beeld dat je ziet als je een link deelt
 - `app/fonts`: de lettertypes Anybody en Newsreader (vrije licentie, OFL)
 - `app/admin`: het beheer (inloggen, overzicht, nieuwe week, bewerken)

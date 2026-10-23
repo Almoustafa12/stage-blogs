@@ -1,7 +1,8 @@
 import type { CSSProperties } from 'react'
 import { SITE, mastParts } from 'app/site'
-import { formatDate, getBlogPosts, weekStyle } from 'app/blog/utils'
+import { getBlogPosts, getTags } from 'app/blog/utils'
 import { Arrow, Colofon, Letters, PostCover } from './magazine'
+import { TagRow, TocList, TopBar } from './lists'
 
 // De startpagina: de kiosk met alle nummers, week 1 eerst.
 export function Kiosk() {
@@ -11,12 +12,7 @@ export function Kiosk() {
   return (
     <div id="pg" className="pg pg--kiosk" data-page="kiosk">
       <header className="mh" data-mh="">
-        <p className="mh-bar">
-          <span>Almoustafa</span>
-          <span>
-            {SITE.company}, {SITE.place}
-          </span>
-        </p>
+        <TopBar home />
         <h1 className="mh-title">
           <span className="sr">{SITE.name}</span>
           {small && (
@@ -31,7 +27,13 @@ export function Kiosk() {
       </header>
 
       <section className="intro" aria-label="Over deze blog">
-        <p className="intro-t">{SITE.intro}</p>
+        <p className="intro-t">
+          {SITE.intro}
+          <br />
+          <a className="intro-more" href="/over">
+          → Meer over mij 
+          </a>
+        </p>
       </section>
 
       <section className="rack" id="weken" aria-labelledby="rack-h">
@@ -67,29 +69,12 @@ export function Kiosk() {
         </p>
       </section>
 
-      <section className="toc" aria-labelledby="toc-h">
+      <section className="toc" id="inhoud" aria-labelledby="toc-h">
         <h2 id="toc-h" className="sec-h">
           Inhoud
         </h2>
-        <ol className="toc-list">
-          {posts.map((post) => (
-            <li key={post.slug} style={weekStyle(post.metadata.week)}>
-              <a className="toc-a" href={`/blog/${post.slug}`} data-slug={post.slug}>
-                <span className="toc-n" aria-hidden="true">
-                  {post.metadata.week}
-                </span>
-                <span className="toc-main">
-                  <span className="toc-meta">
-                    {post.metadata.publishedAt && <span>{formatDate(post.metadata.publishedAt)}</span>}
-                    <span>{post.metadata.readingMinutes} min lezen</span>
-                  </span>
-                  <span className="toc-title">{post.metadata.title}</span>
-                  <span className="toc-ex">{post.metadata.excerpt}</span>
-                </span>
-              </a>
-            </li>
-          ))}
-        </ol>
+        <TagRow tags={getTags(posts)} />
+        <TocList posts={posts} />
       </section>
 
       <Colofon />

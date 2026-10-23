@@ -2,6 +2,7 @@ import { SITE } from 'app/site'
 import { weekStyle, type Post } from 'app/blog/utils'
 import { CustomMDX } from './mdx'
 import { Arrow, Colofon, PostCover } from './magazine'
+import { PostTags } from './lists'
 
 type Props = { post: Post; prev?: Post; next?: Post }
 
@@ -89,6 +90,12 @@ export function Feature({ post, prev, next }: Props) {
             <span className="ft-sq" aria-hidden="true" />
             {firstName}
           </p>
+          {post.metadata.tags.length > 0 && (
+            <div className="ft-tags">
+              <p className="ft-tags-h">Meer over</p>
+              <PostTags post={post} />
+            </div>
+          )}
         </div>
       </article>
 

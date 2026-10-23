@@ -1,4 +1,4 @@
-import { getBlogPosts } from 'app/blog/utils'
+import { getBlogPosts, getTags } from 'app/blog/utils'
 
 // Op Vercel komt het adres van de site vanzelf uit VERCEL_PROJECT_PRODUCTION_URL.
 export const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
@@ -12,7 +12,7 @@ export default async function sitemap() {
       post.metadata.publishedAt || new Date().toISOString().split('T')[0],
   }))
 
-  let routes = ['', '/blog'].map((route) => ({
+  let routes = ['', '/blog', '/over', ...getTags().map((tag) => `/tags/${tag.slug}`)].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString().split('T')[0],
   }))

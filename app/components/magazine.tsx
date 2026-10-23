@@ -96,6 +96,7 @@ export function Colofon() {
       </dl>
       <p className="colo-small">
         <span>© {YEAR}</span>
+        <a href="/over">Over mij</a>
       </p>
     </footer>
   )

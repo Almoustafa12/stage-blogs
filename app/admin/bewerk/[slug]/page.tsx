@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import { requireAdmin } from 'lib/admin/session'
 import { getStore, StoreError, type StoredPost } from 'lib/admin/store'
-import { isPostSlug } from 'lib/admin/format'
+import { isPostSlug, usedTags } from 'lib/admin/format'
 import { PostForm } from '../../post-form'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -14,8 +14,10 @@ export default async function EditPostPage({ params }: Props) {
 
   let error = ''
   let post: StoredPost | null = null
+  let knownTags: string[] = []
   try {
     post = await store.get(slug)
+    knownTags = usedTags(await store.list())
   } catch (err) {
     error = err instanceof StoreError ? err.message : 'Deze week kon niet geladen worden.'
   }
@@ -32,7 +34,8 @@ export default async function EditPostPage({ params }: Props) {
         <PostForm
           slug={slug}
           sha={post.sha}
-          initial={{ week: String(post.week), title: post.title, date: post.date, text: post.text }}
+          knownTags={knownTags}
+          initial={{ week: String(post.week), title: post.title, date: post.date, tags: post.tags, text: post.text }}
         />
       )}
     </main>

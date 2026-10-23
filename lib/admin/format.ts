@@ -5,7 +5,7 @@
 // Tekens die in MDX iets betekenen ({ } < > * _ ...) worden onschadelijk gemaakt,
 // zodat een blog de site nooit kan breken.
 
-export type PostInput = { week: number; title: string; date: string; text: string }
+export type PostInput = { week: number; title: string; date: string; tags: string[]; text: string }
 
 const PUNCT = /[\\`*_{}[\]<>#|~&!]/g
 
@@ -75,6 +75,7 @@ function quote(value: string) {
 export function toMdx(post: PostInput) {
   let head = ['---', `title: ${quote(post.title)}`, `week: ${post.week}`]
   if (post.date) head.push(`publishedAt: ${quote(post.date)}`)
+  if (post.tags.length) head.push(`tags: ${quote(post.tags.join(', '))}`)
   head.push('---', '')
   return head.join('\n') + '\n' + textToBody(post.text) + '\n'
 }
@@ -95,6 +96,7 @@ export function fromMdx(raw: string) {
     week: parseInt(meta.week || '0', 10) || 0,
     title: meta.title || '',
     date: meta.publishedAt || '',
+    tags: meta.tags || '',
     text: bodyToText(body),
   }
 }
@@ -112,11 +114,33 @@ export function validatePost(values: Record<string, unknown>): { post: PostInput
     return { error: 'De datum klopt niet. Gebruik de datumkiezer of laat het veld leeg.' }
   }
 
+  let tags = String(values.tags ?? '')
+    .split(',')
+    .map((tag) => tag.replace(/\s+/g, ' ').trim())
+    .filter((tag, i, all) => tag && all.findIndex((t) => t.toLowerCase() === tag.toLowerCase()) === i)
+  if (tags.length > 6) return { error: 'Kies hoogstens 6 tags.' }
+  if (tags.some((tag) => tag.length > 30)) return { error: 'Een tag mag hoogstens 30 tekens lang zijn.' }
+  if (tags.some((tag) => !/^[\p{L}\p{N}][\p{L}\p{N} &+.-]*$/u.test(tag))) {
+    return { error: 'Een tag mag alleen letters, cijfers, spaties en - + & . bevatten.' }
+  }
+
   let text = String(values.text ?? '').replace(/\r\n?/g, '\n').trim()
   if (!text) return { error: 'De tekst is leeg.' }
   if (text.length > 20000) return { error: 'De tekst is te lang (maximaal 20.000 tekens).' }
 
-  return { post: { week, title, date, text } }
+  return { post: { week, title, date, tags, text } }
+}
+
+// Alle tags die al gebruikt worden, als voorstel in het beheer
+export function usedTags(posts: { tags: string }[]) {
+  let seen = new Map<string, string>()
+  for (let post of posts) {
+    for (let tag of post.tags.split(',')) {
+      let name = tag.trim()
+      if (name && !seen.has(name.toLowerCase())) seen.set(name.toLowerCase(), name)
+    }
+  }
+  return Array.from(seen.values()).sort((a, b) => a.localeCompare(b, 'nl'))
 }
 
 export function isPostSlug(slug: string) {

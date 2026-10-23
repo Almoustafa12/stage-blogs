@@ -16,7 +16,7 @@ import { isPostSlug, toMdx, validatePost } from 'lib/admin/format'
 // Next.js controleert ook dat het formulier van deze site zelf komt.
 
 export type LoginState = { error?: string }
-export type FormValues = { week: string; title: string; date: string; text: string }
+export type FormValues = { week: string; title: string; date: string; tags: string; text: string }
 export type SaveState = { error?: string; values?: FormValues }
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
@@ -59,6 +59,7 @@ function valuesFrom(formData: FormData): FormValues {
     week: String(formData.get('week') ?? ''),
     title: String(formData.get('title') ?? ''),
     date: String(formData.get('date') ?? ''),
+    tags: String(formData.get('tags') ?? ''),
     text: String(formData.get('text') ?? ''),
   }
 }

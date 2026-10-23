@@ -10,6 +10,7 @@ type Metadata = {
   excerpt: string
   readingMinutes: number
   image?: string
+  tags: string[]
 }
 
 export type Post = {
@@ -55,6 +56,17 @@ export function weekStyle(week: number): CSSProperties {
 // 1 -> "01"
 export function pad2(n: number) {
   return String(n).padStart(2, '0')
+}
+
+export type Tag = { name: string; slug: string; count: number }
+
+// "Code, Lessons learned" -> ['Code', 'Lessons learned'] (dubbels en lege weg)
+export function parseTags(value: string | undefined) {
+  let seen = new Set<string>()
+  return (value || '')
+    .split(',')
+    .map((tag) => tag.trim())
+    .filter((tag) => tag && !seen.has(tag.toLowerCase()) && seen.add(tag.toLowerCase()))
 }
 
 export function slugify(text: string) {
@@ -173,6 +185,7 @@ function readPost(dir: string, file: string): Post {
       excerpt: metadata.summary || excerptFrom(content),
       readingMinutes: readingMinutesOf(content),
       image: metadata.image || undefined,
+      tags: parseTags(metadata.tags),
     },
   }
 }
@@ -183,6 +196,24 @@ export function getBlogPosts(): Post[] {
   return getMDXFiles(dir)
     .map((file) => readPost(dir, file))
     .sort((a, b) => a.metadata.week - b.metadata.week || a.slug.localeCompare(b.slug))
+}
+
+// Alle tags met hoeveel blogs ze hebben: de meest gebruikte eerst.
+export function getTags(posts = getBlogPosts()): Tag[] {
+  let tags = new Map<string, Tag>()
+  for (let post of posts) {
+    for (let name of post.metadata.tags) {
+      let slug = slugify(name)
+      let tag = tags.get(slug) || { name, slug, count: 0 }
+      tag.count++
+      tags.set(slug, tag)
+    }
+  }
+  return Array.from(tags.values()).sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, 'nl'))
+}
+
+export function postsWithTag(slug: string, posts = getBlogPosts()) {
+  return posts.filter((post) => post.metadata.tags.some((tag) => slugify(tag) === slug))
 }
 
 export function formatDate(date: string) {
