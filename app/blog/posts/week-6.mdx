@@ -1,0 +1,25 @@
+---
+title: 'Week 6 bij Nexu'
+week: 6
+tags: 'Odoo 20, Testen, Code, Documentatie, Lessons learned'
+---
+
+Week zes zit erop. Deze week ging over twee dingen: zorgen dat alles ook in de nieuwste versie van Odoo werkt.
+
+Odoo 20 kwam uit op 24 september. Ik was toen al volop aan het bouwen in Odoo 19, en een klant stapt niet van de ene dag op de andere over. Daarom moest alles werken in Odoo 19 en in Odoo 20. Odoo 20 is net anders dan in 19. Sommige velden hebben een andere naam, een pagina van de webshop wordt anders opgebouwd, het afrekenen werkt anders, en zelfs de manier waarop Odoo weet in welke webshop je zit, is veranderd. Ik keek telkens de broncode van beide versies na, zodat ik mijn uitbreidingen kon aanpassen en dat de code op beide versies draaien en mijn modules dus zowel compatibel zijn op Odoo 19 als 20. Wat meerdere uitbreidingen nodig hebben en in 19 en 20 anders werkt, word nu geregeld door een kleine gedeelde module, zodat er niets dubbel staat.
+
+Werken met testgegevens is een ding, maar ik wilde ook weten of het met echte gegevens werkt. Ik zette een kopie van de echte data over naar Odoo 20: de producten, partijen, prijzen, bestellingen, inkopen en alle voorraadbewegingen, in dezelfde volgorde als ze gebeurd waren. Daarna vergeleek ik alles naast elkaar: de voorraad per partij, de kostprijs, de prijzen op elke offerte en de meldingen die een verkoper te zien krijgt. Odoo 19 en Odoo 20 gaven precies hetzelfde.
+
+Ik testte deze week ook in een browser, door vanzelf door de webshop te klikken zoals een apotheek dat zou doen. Dat was nodig, want mijn andere tests controleren wat er op de server gebeurt, niet wat je op het scherm ziet. Zo vond ik twee fouten die alleen in Odoo 20 opdoken. De teller op de productpagina, die toont hoeveel er nog verkocht moet worden voor de volgende korting, werd niet meer bijgewerkt na "In winkelmandje". En een venster bij het kiezen van een leverancier crashte meteen. Allebei opgelost, en daarna werkte alles in beide versies zonder fouten.
+
+Ik maakte ook een paar dingen duidelijker voor wie er dagelijks mee werkt:
+
+- Bij een inkoop die al in de webshop te koop staat, zie je nu in één kader per kortingsstap hoeveel er al besteld is en door welke apotheken. Ook bestellingen die al wachtten en stuks uit die inkoop kregen, staan erbij. Hun offertes bevestig je in één klik.
+- Op een offerte toont de knop Inkoop nu ook de inkoop waarop de bestelling wacht, zodat je meteen ziet waar de goederen vandaan komen.
+- De knop "Partijen bijwerken" verschijnt alleen nog als er echt vrije voorraad is. Anders legt de melding uit wat je wel kan doen.
+- Twee meldingen die hetzelfde zeiden, werden er één.
+- Het venster bij het kiezen van een leverancier stoorde meer dan het hielp. Op vraag haalde ik het weg: de leverancier van het product komt nog altijd vanzelf bovenaan.
+
+Op het einde van de week documenteerde ik alles . Er is nu een documentatie van 51 bladzijden, zodat mijn stagementor stap voor stap kan zien wat ik gebouwd heb en het met de klant kan bespreken: wat elke uitbreiding doet, en of het standaard-Odoo is of een custom-module en hoe je het gebruikt. Die document is opgedeeld per rol, zoals de apotheek, de verkoper, de inkoper en het magazijn.
+
+Wat ik deze week geleerd heb: afwerken kost meer tijd dan bouwen. Bij elke aanpassing moet je nagaan of ze niets kapotmaakt in de samenwerking met de andere modules, en dus daarna alles opnieuw testen.
