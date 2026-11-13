@@ -1,0 +1,26 @@
+---
+title: 'Week 7 bij Nexu'
+week: 7
+tags: 'Certificaten, PDF lezen, Automatisatie, SharePoint, Lessons learned'
+---
+
+Week zeven was een week van iets nieuws. Ik kreeg een nieuwe opdracht: een module voor certificaten. Die is bedoeld voor de team van Nexu die met certificaten werkt.
+
+Eerst moest ik zelf goed snappen wat een certificaat is. Het is een bewijs dat een bedrijf of product aan iets voldoet of iets mag doen, bijvoorbeeld een ISO 9001-certificaat voor kwaliteit, of een GDP-certificaat dat een groothandel geneesmiddelen correct bewaart en vervoert. Zo'n certificaat vervalt na een tijd en moet dan vernieuwd worden. Ook mocht het oude certificaat niet zomaar verdwijnen, want het blijft het bewijs dat alles in orde was in die periode.
+
+Daarop bouwde ik de basis. Een certificaat hoort bij iemand of iets: een leverancier, een klant, een product of zelfs een verkooporder. Bij een vernieuwing komt er een nieuwe versie met haar eigen bestand en datums, en de oude versies blijven bewaard. Een bepaald aantal dagen voor de vervaldatum krijgt de verantwoordelijke een herinnering in Odoo. Wordt een certificaat pas ingevoerd als die datum al voorbij is, dan komt de herinnering meteen, en niet pas de volgende dag. Je kan filteren op vervallen, binnenkort vervallend en geldig. De module stelt ook vanzelf de soort voor: heet een certificaat "ISO 9001 Labo Alfa", dan vult ze de soort ISO 9001 in.
+
+Omdat lijsten alleen niet genoeg zeggen, maakte ik een overzichtspagina. In één oogopslag zie je hoeveel certificaten vervallen zijn, bijna vervallen of geldig, met een grafiek en een lijst van wat aandacht vraagt. Daarbij moest ik op kleine dingen letten. Zo telden de percentages in de grafiek eerst op tot 101 in plaats van 100, door afronding. Voor een programmeur is dat logisch, maar voor een gebruiker lijkt het een fout, dus ik paste de berekening aan.
+
+Het grootste werk van de week was het lezen van het certificaat zelf. Je sleept een pdf in een groot vak, en de module vult de gegevens in: het bedrijf, het certificaatnummer, de soort en de datums. Dat klinkt eenvoudig, maar elk certificaat ziet er anders uit. Het ene schrijft "Valid until", het andere "Geldig tot" of "Expiry date", en datums staan in allerlei vormen. Ik zocht op hoe zulke certificaten meestal opgebouwd zijn, en maakte de module zo dat ze toont hoe zeker ze is. Wat ze met zekerheid vond, is groen. Wat ze moest gokken, bijvoorbeeld een datum zonder woord ervoor, wordt oranje, en dan moet de gebruiker het nakijken voor hij kan opslaan.
+
+Om te kunnen controleren of alles klopt, staat het certificaat nu naast de ingevulde gegevens. In het pdf zelf staat een kader rond elk gegeven dat gevonden werd. Ga je met de muis op zo'n kader staan, dan zie je wat er gelezen werd. Klik je erop, dan spring je naar het veld. Zo hoeft niemand blind te vertrouwen op wat de module invulde.
+
+Daarna kwamen er twee dingen bij die veel handwerk besparen:
+
+- Certificaten kunnen nu per mail binnenkomen. Een leverancier stuurt zijn certificaat naar een vast adres, en het verschijnt in Odoo als "na te kijken", al ingevuld. Pas na goedkeuring telt het mee.
+- Je kan regels instellen. Bijvoorbeeld: een inkooporder wordt pas bevestigd als de leverancier een geldig GDP-certificaat heeft. Je kiest of Odoo het blokkeert of alleen waarschuwt. Een beheerder kan in een uitzonderlijk geval toch toelaten, en dat wordt bijgehouden.
+
+Op het einde van de week kreeg ik een opdracht om zelf uit te proberen: de bestanden van de certificaten bewaren in SharePoint in plaats van in Odoo, zoals veel bedrijven dat willen. Ik zette daarvoor een proefversie van Microsoft 365 op, maar die kreeg ik uiteindelijk niet. Daarom kon ik het zelf niet uittesten. Nexu zal het dus later testen met hun eigen SharePoint.
+
+Wat ik deze week geleerd heb: een slimme functie is pas nuttig als je kan zien waarom ze iets doet. Het automatisch invullen werkte niet bij elk certificaat, en dat zal ook nooit helemaal lukken. Daarom is het tonen waar elk gegeven vandaan komt, en wat de module moest gokken, minstens even belangrijk als het invullen zelf. Aangezien er talloze certificaten zijn: kan je niet uitgaan van het ene voorbeeld dat je voor je hebt.
