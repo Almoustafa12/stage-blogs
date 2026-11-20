@@ -1,0 +1,27 @@
+---
+title: 'Week 9 bij Nexu'
+week: 9
+tags: 'Certificaten, SharePoint, Design'
+---
+
+Vorige week testte ik de regels in een webshop. Deze week keek ik naar wat er daarna gebeurt: wat ziet de beheerder als een order vastloopt, en waar komen de bestanden terecht?
+
+Op het overzicht staat nu een paneel "Wacht op een certificaat". Daar zie je welke offertes, bestellingen en facturen stilstaan omdat er een geldig certificaat ontbreekt. De rest van het overzicht zegt welk certificaat vervallen is, dit paneel zegt wat dat de zaak kost. Ook bovenaan zo'n order staat nu wat er ontbreekt, met een knop om het certificaat meteen toe te voegen.
+
+Twee weken geleden lukte het niet om SharePoint te testen. Deze week kreeg ik een testaccount, en gingen de eerste certificaten echt naar SharePoint, netjes in een map per soort en per bedrijf. Elk certificaat krijgt daar een voorpagina die in een paar regels zegt wat het is, van wie en tot wanneer, met een knop om het in Odoo te openen. Wie die voorpagina niet wil, zet ze uit in de instellingen. Verwijder je een certificaat in Odoo, dan verdwijnt het ook uit SharePoint. Een vergissing maak je in de instellingen weer ongedaan.
+
+Een groot deel van de week ging naar de stijl. De hele app kreeg één vaste stijl, in het blauw van haar icoon. Mijn eerste versies hadden overal gekleurde randen, kleurverlopen en icoontjes in vakjes. Dat zag er af uit, maar ook generiek, zoals een standaardsjabloon. Nu dragen letters en witruimte het ontwerp, en komt kleur alleen nog voor waar ze iets betekent: een klein rood bolletje bij een vervallen certificaat.
+
+Ik haalde ook een functie weg: de module kon een certificaat zelf goedkeuren als ze alles met zekerheid gelezen had. Dat klinkt handig, maar een certificaat is een bewijs, en een fout daarin merk je pas als het te laat is. Nu beslist altijd een mens.
+
+Op het einde van de week was ik opnieuw bezig met het klantproject van de voorbije weken. Mijn stagementor had met de klant gesproken, en samen spraken we af om van voor af aan te beginnen. Mijn testdatabase was vervallen, en we besloten dat het beter is om eerst zoveel mogelijk met standaard Odoo te doen, en pas daarna eigen modules te bouwen voor wat Odoo zelf niet kan.
+
+Dus begon ik opnieuw, deze keer alleen met wat Odoo zelf biedt:
+
+- Een opzet met meerdere bedrijven: een hoofdbedrijf en enkele vestigingen. Eén vestiging is ook het magazijn, en van daaruit gebeuren alle leveringen.
+- Een webshop waar klanten eerst moeten inloggen voor ze iets kunnen bestellen. Ze betalen niet online, maar krijgen achteraf een factuur, en ze krijgen een vaste korting.
+- Odoo bestelt zelf bij de leverancier bij als de voorraad te laag wordt, met een minimum en een maximum per product. Ik zocht goed uit hoe die berekening werkt, zodat er niet te veel of te weinig besteld wordt.
+
+Daarna testte ik de hele weg: een klant plaatst een bestelling, Odoo bestelt bij de leverancier, het magazijn ontvangt de goederen en levert ze aan de klant.
+
+Wat ik deze week geleerd heb: automatisch en op maat zijn niet altijd beter. Het zelf goedkeuren van certificaten haalde ik weg, omdat een fout in een bewijs te veel kost. En bij het klantproject bleek dat standaard Odoo al veel kan, zodat ik alleen nog zelf moet bouwen wat echt ontbreekt.
